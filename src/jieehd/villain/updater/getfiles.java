@@ -109,7 +109,17 @@ private void ListDir(File f){
 	    	        	        break;
 	    	        	   
 	    	           case 2:
-	    	           	
+	    	        	    AlertDialog.Builder noworky = new AlertDialog.Builder(getfiles.this);                 
+	    	        	    noworky.setTitle("O NOES!");  
+	    	        	    noworky.setMessage("Unfortunately, due to limitations with the CWM recovery series, the only app that can install ROMs is ROM Manager. Sorry.");    
+    	        	        noworky.setNegativeButton("Ok :(", new DialogInterface.OnClickListener() {
+
+    	        	            public void onClick(DialogInterface dialog, int which) {
+    	        	                // TODO Auto-generated method stub
+    	        	                return;   
+    	        	            }
+    	        	        });
+    	        	        noworky.show();
 	    	           	break;
 	    	        	   
 	    	           }

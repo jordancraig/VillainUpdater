@@ -20,8 +20,9 @@ public final class R {
         public static final int checkBox1=0x7f060014;
         public static final int checkBox2=0x7f060015;
         public static final int dialog=0x7f06000a;
-        public static final int exit=0x7f060019;
+        public static final int exit=0x7f06001a;
         public static final int horizontalLine=0x7f060009;
+        public static final int refresh=0x7f060019;
         public static final int settings=0x7f060017;
         public static final int textView1=0x7f060000;
         public static final int textView2=0x7f060001;

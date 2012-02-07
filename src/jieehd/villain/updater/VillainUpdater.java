@@ -139,6 +139,8 @@ public class VillainUpdater extends Activity {
             case R.id.exit: 		finish();
             						System.exit(0);
                                 break;
+            case R.id.refresh: 		new Read().execute();
+            				    break;
         }
         return true;
     }
