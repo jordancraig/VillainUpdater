@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tvDevice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#177BBD"
+        android:text="Device:"
+        />
+
+    <TextView
+        android:id="@+id/tvROM"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#177BBD"
+        android:text="ROM:" />
+
+    <TextView
+        android:id="@+id/tvVer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#177BBD"
+        android:text="Version:" />
+
+    <TextView
+        android:id="@+id/tvBuild"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#177BBD"
+        android:text="Build-fingerprint: " />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/tvUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Checking for updates, please be patient." />
+
+    <TextView
+        android:id="@+id/tvNewVer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/tvUpdate_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/tvProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="" />
+
+    <Button
+        android:id="@+id/btnDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Download" />
+
+</LinearLayout>
