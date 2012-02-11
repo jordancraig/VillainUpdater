@@ -20,8 +20,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,6 +35,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 
@@ -130,7 +133,8 @@ public class VillainUpdater extends Activity {
         						break;
             case R.id.settings:     Intent settings = new Intent();
             						settings.setClass(getApplicationContext(), villainsettings.class);
-            						startActivity(settings);
+            						 Intent settingsActivity = new Intent(getBaseContext(), villainsettings.class);
+            						 startActivity(settingsActivity);
                                 break;
             case R.id.exit: 		finish();
             						System.exit(0);
@@ -285,93 +289,99 @@ public class VillainUpdater extends Activity {
 						tvUpdate.setText("No new updates available!");
 						tvNewVer.setText(":(");
 					}else{
-						tvUpdate.setText("New updates available!");
-						tvNewVer.setText("New version: " + result.mRom);
-						tvUpdate_info.setText("Changelog: " + result.mChange);
-						btnDown.setVisibility(0);
+    	        	    AlertDialog.Builder alert = new AlertDialog.Builder(VillainUpdater.this);                 
+    	        	    alert.setTitle("New updates available!");  
+    	        	    alert.setMessage("Changelog: " + result.mChange);
+
+ 
+
+    	        	        alert.setPositiveButton("Download", new DialogInterface.OnClickListener() {  
+    	        	        public void onClick(DialogInterface dialog, int whichButton) {  
+    								showDialog(DIALOG_DOWNLOAD_PROGRESS);
+    								new Thread(new Runnable() {
+
+    								public void run(){
+    									try {
+    										URL getUrl = new URL (result.mUrl);
+    										final File file = new File(PATH + "_" + result.mBuild + "_"  + result.mRom + ".zip");
+    										long startTime = System.currentTimeMillis();
+    										Log.d("Download Manager", "download beginning: " + startTime);
+    										Log.d("Download Manager", "download url: " + getUrl);
+    										Log.d("Download Manager", "file name: " + file);
+    																	
+    										
+    										URLConnection ucon = getUrl.openConnection();
+    										final int lengthOfFile = ucon.getContentLength();
+    										ucon.connect();
+    										InputStream input = new BufferedInputStream(getUrl.openStream());
+    										OutputStream output = new FileOutputStream(PATH + "_" + result.mBuild + "_" + result.mRom + ".zip");
+    										
+    										
+    										byte data[] = new byte[1024];
+    																		
+    										int current;
+    										long total = 0;
+    										while ((current = input.read(data)) != -1) {
+    								       		output.write(data, 0, current);
+    											total += current;
+    											updateProgress(total, lengthOfFile);
+    											}
+    										mProgressDialog.dismiss();
+    										output.flush();
+    										output.close();
+    										input.close();
+    										
+    									
+    										
+    																											
+    										long finishTime = System.currentTimeMillis();
+    										Log.d("Download Manager", "download finished: " + finishTime);
+    									}catch (ClientProtocolException e) {
+    									// TODO Auto-generated catch block
+    									e.printStackTrace();
+    									} catch (IOException e) {
+    									// TODO Auto-generated catch block
+    									e.printStackTrace();
+    									}
+    								    }
+    								
+    								public void updateProgress(final long total, final int lengthOfFile) {
+    									runOnUiThread(new Runnable() {
+
+    										public void run() {
+    									    mProgressDialog.setMax(lengthOfFile);
+    									    mProgressDialog.setProgress((int) total);
+    									    
+    									    tvUpdate.setText("Download Successful!");
+    									    tvNewVer.setText("Your file can be found at" + PATH);
+    									    tvUpdate_info.setText("");
+    									    btnDown.setVisibility(4);
+    									}});
+    									}
+    								
+    							    	
+    								}).start();
+    	        	            return; 
+    	        	           }  
+    	        	         });  
+
+    	        	        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+    	        	            public void onClick(DialogInterface dialog, int which) {
+    	        	                // TODO Auto-generated method stub
+    	        	                return;   
+    	        	            }
+    	        	        });
+    	        	        alert.show();
 						
 						
-				        btnDown.setOnClickListener(new OnClickListener()  {
-
-
-							public void onClick(View v) {
-								showDialog(DIALOG_DOWNLOAD_PROGRESS);
-								new Thread(new Runnable() {
-
-								public void run(){
-									try {
-										URL getUrl = new URL (result.mUrl);
-										final File file = new File(PATH + "_" + result.mBuild + "_"  + result.mRom + ".zip");
-										long startTime = System.currentTimeMillis();
-										Log.d("Download Manager", "download beginning: " + startTime);
-										Log.d("Download Manager", "download url: " + getUrl);
-										Log.d("Download Manager", "file name: " + file);
-																	
-										
-										URLConnection ucon = getUrl.openConnection();
-										final int lengthOfFile = ucon.getContentLength();
-										ucon.connect();
-										InputStream input = new BufferedInputStream(getUrl.openStream());
-										OutputStream output = new FileOutputStream(PATH + "_" + result.mBuild + "_" + result.mRom + ".zip");
-										
-										
-										byte data[] = new byte[1024];
-																		
-										int current;
-										long total = 0;
-										while ((current = input.read(data)) != -1) {
-								       		output.write(data, 0, current);
-											total += current;
-											updateProgress(total, lengthOfFile);
-											}
-										mProgressDialog.dismiss();
-										output.flush();
-										output.close();
-										input.close();
-										
-									
-										
-																											
-										long finishTime = System.currentTimeMillis();
-										Log.d("Download Manager", "download finished: " + finishTime);
-									}catch (ClientProtocolException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-									} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-									}
-								    }
-								
-								public void updateProgress(final long total, final int lengthOfFile) {
-									runOnUiThread(new Runnable() {
-
-										public void run() {
-									    mProgressDialog.setMax(lengthOfFile);
-									    mProgressDialog.setProgress((int) total);
-									    
-									    tvUpdate.setText("Download Successful!");
-									    tvNewVer.setText("Your file can be found at" + PATH);
-									    tvUpdate_info.setText("");
-									    btnDown.setVisibility(4);
-									}});
-									}
-								
-							    	
-								}).start();
-								
-
-								
-								
-
-							}
 
 						
 
 					}
-		);}
+		;}
 
 		}
 		
 }
-}
+

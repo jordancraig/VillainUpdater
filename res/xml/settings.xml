@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+            <PreferenceCategory
+                android:title="Settings">
+                <CheckBoxPreference
+                        android:title="Show update notifications"
+                        android:defaultValue="true"
+                        android:summary="Show update notifications for new versions of your current ROM."
+                        android:key="update_notify" />
+                <CheckBoxPreference
+                        android:title="Delete old files"
+                        android:defaultValue="false"
+                        android:summary="Delete ROMs that are over a month old."
+                        android:key="clean_up" />                
+			</PreferenceCategory>
+			
+            <PreferenceCategory 
+                android:title="About">
+               <Preference
+                android:title="Version"
+                android:summary="1.0.0"
+                android:key="tv_version" />
+               <Preference
+                android:title="Developer"
+                android:summary="Jordan Craig"
+                android:key="tv_dev"/>
+            </PreferenceCategory>
+</PreferenceScreen>

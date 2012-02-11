@@ -26,10 +26,18 @@
             android:name=".getfiles"
             android:label="@string/app_name">
         </activity>
+        <activity
+        android:name=".Preferences"
+        android:label="@string/app_name">
+		</activity>
         <activity 
             android:name=".about"
             android:label="@string/app_name">
         </activity>
+        <activity
+        	android:name=".Preferences"
+        	android:label="@string/app_name">
+		</activity>
         <activity
             android:name=".villainsettings"
             android:label="@string/app_name">

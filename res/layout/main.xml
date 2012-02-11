@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" style="@style/info_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
+    
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -13,17 +13,25 @@
 
     <TextView
         android:id="@+id/tvDevice"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        />
+        android:text="" />
 
     <LinearLayout
         android:id="@+id/horizontalLine"
-        android:layout_width="fill_parent"
+        android:layout_width="295dp"
         android:layout_height="0.5dip"
+        android:layout_gravity="center|left"
         android:background="#656565" >
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:id="@+id/textView3"
@@ -38,16 +46,21 @@
         android:layout_height="wrap_content"
         android:text="" />
     
-        <LinearLayout
+    <LinearLayout
         android:id="@+id/horizontalLine"
-        android:layout_width="fill_parent"
+        android:layout_width="295dp"
         android:layout_height="0.5dip"
-        android:layout_column="0"
-        android:layout_columnSpan="6"
-        android:layout_gravity="center_horizontal"
-        android:layout_row="9"
+        android:layout_gravity="center|left"
         android:background="#656565" >
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:id="@+id/textView4"
@@ -62,17 +75,21 @@
         android:layout_height="wrap_content"
         android:text="" />
     
-    
-        <LinearLayout
+    <LinearLayout
         android:id="@+id/horizontalLine"
-        android:layout_width="fill_parent"
+        android:layout_width="295dp"
         android:layout_height="0.5dip"
-        android:layout_column="0"
-        android:layout_columnSpan="6"
-        android:layout_gravity="center_horizontal"
-        android:layout_row="9"
+        android:layout_gravity="center|left"
         android:background="#656565" >
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/textView5"
@@ -87,15 +104,14 @@
         android:layout_height="wrap_content"
         android:text="" />
     
-        <LinearLayout
+    <LinearLayout
         android:id="@+id/horizontalLine"
-        android:layout_width="fill_parent"
+        android:layout_width="295dp"
         android:layout_height="0.5dip"
-        android:layout_column="0"
-        android:layout_columnSpan="6"
-        android:layout_gravity="center_horizontal"
-        android:layout_row="9"
-        android:background="#656565" >
+        android:layout_gravity="center|left"
+        android:background="#656565"
+        android:gravity="left" >
+
     </LinearLayout>
 
         <TextView
