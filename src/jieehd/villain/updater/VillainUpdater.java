@@ -94,10 +94,10 @@ public class VillainUpdater extends Activity {
         String buildRom = android.os.Build.DISPLAY;
         String buildPrint = android.os.Build.FINGERPRINT;
         
-        tvDevice.setText("Device: " + buildDevice);
-        tvROM.setText("ROM: " + buildRom);
-        tvVer.setText("Version: " + buildVersion);
-        tvBuild.setText("Build-fingerprint: " + buildPrint);
+        tvDevice.setText(buildDevice);
+        tvROM.setText(buildRom);
+        tvVer.setText(buildVersion);
+        tvBuild.setText(buildPrint);
         
        
         
@@ -132,10 +132,6 @@ public class VillainUpdater extends Activity {
             						settings.setClass(getApplicationContext(), villainsettings.class);
             						startActivity(settings);
                                 break;
-            case R.id.about:		Intent about = new Intent();
-            						about.setClass(getApplicationContext(), about.class);
-            						startActivity(about);
-            					break;
             case R.id.exit: 		finish();
             						System.exit(0);
                                 break;
