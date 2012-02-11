@@ -4,7 +4,7 @@
                 android:title="Settings">
                 <CheckBoxPreference
                         android:title="Show update notifications"
-                        android:defaultValue="true"
+                        android:defaultValue="false"
                         android:summary="Show update notifications for new versions of your current ROM."
                         android:key="update_notify" />
                 <CheckBoxPreference

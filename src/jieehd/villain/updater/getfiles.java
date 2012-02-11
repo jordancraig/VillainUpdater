@@ -8,15 +8,9 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -55,10 +49,7 @@ private void ListDir(File f){
     	       AlertDialog.Builder builder = new AlertDialog.Builder(getfiles.this);
     	       builder.setTitle("Options");
     	       builder.setItems(new String []{"Delete", "Re-name", "Install"}, new DialogInterface.OnClickListener() {
-    	    	   public void onClick (DialogInterface dialog) {
-    	    	           dialog.dismiss();
 
-    	    	   }
 
 
 				public void onClick(DialogInterface dialog, int which) {
@@ -72,6 +63,11 @@ private void ListDir(File f){
 	    	        	   setListAdapter(directoryList);
 	        	           ListDir(SDDIR);
 	        	           directoryList.notifyDataSetChanged();
+	        	           if (deleted == true) {
+	        	        	   Toast.makeText(getApplicationContext(), "File deleted succesfully", Toast.LENGTH_SHORT);
+	        	           }else{
+	        	        	   Toast.makeText(getApplicationContext(), "There was a problem while deleting the selected file", Toast.LENGTH_SHORT);
+	        	           }
 	    	        	   break;
 	    	           case 1:
 	    	        	    AlertDialog.Builder alert = new AlertDialog.Builder(getfiles.this);                 
@@ -85,7 +81,6 @@ private void ListDir(File f){
 	    	        	        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {  
 	    	        	        public void onClick(DialogInterface dialog, int whichButton) {  
 	    	        	            String value = input.getText().toString();
-	    	        	            String Path = pathList.get(pos);
 	    	        	            String Name = fileList.get(pos);
 	    	        	            File SDPath = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + PATH);
 	    	        	            File from = new File(SDPath, Name);
