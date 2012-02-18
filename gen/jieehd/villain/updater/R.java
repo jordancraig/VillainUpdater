@@ -8,76 +8,91 @@
 package jieehd.villain.updater;
 
 public final class R {
+    public static final class array {
+        public static final int list_update_interval_Array=0x7f050000;
+        public static final int list_update_interval_Values=0x7f050001;
+    }
     public static final class attr {
     }
     public static final class drawable {
-        public static final int divider=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
+        public static final int cloud=0x7f020000;
+        public static final int device=0x7f020001;
+        public static final int divider=0x7f020002;
+        public static final int hammer=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int info=0x7f020005;
+        public static final int key=0x7f020006;
+        public static final int updates=0x7f020007;
+        public static final int version=0x7f020008;
+        public static final int wrench=0x7f020009;
     }
     public static final class id {
-        public static final int btnDown=0x7f080012;
-        public static final int dialog=0x7f080000;
-        public static final int exit=0x7f080016;
-        public static final int horizontalLine=0x7f080003;
-        public static final int refresh=0x7f080015;
-        public static final int settings=0x7f080014;
-        public static final int textView1=0x7f08000d;
-        public static final int textView2=0x7f080001;
-        public static final int textView3=0x7f080005;
-        public static final int textView4=0x7f080008;
-        public static final int textView5=0x7f08000b;
-        public static final int textView6=0x7f080004;
-        public static final int textView7=0x7f080007;
-        public static final int textView8=0x7f08000a;
-        public static final int tvBuild=0x7f08000c;
-        public static final int tvDevice=0x7f080002;
-        public static final int tvNewVer=0x7f08000e;
-        public static final int tvProgress=0x7f080011;
-        public static final int tvROM=0x7f080006;
-        public static final int tvUpdate=0x7f08000f;
-        public static final int tvUpdate_info=0x7f080010;
-        public static final int tvVer=0x7f080009;
-        public static final int view=0x7f080013;
+        public static final int btnDown=0x7f090015;
+        public static final int dialog=0x7f090000;
+        public static final int exit=0x7f090019;
+        public static final int horizontalLine=0x7f090003;
+        public static final int horizontalLine1=0x7f090007;
+        public static final int horizontalLine2=0x7f09000b;
+        public static final int horizontalLine3=0x7f09000f;
+        public static final int refresh=0x7f090018;
+        public static final int settings=0x7f090017;
+        public static final int textView1=0x7f090010;
+        public static final int textView3=0x7f090005;
+        public static final int textView4=0x7f090009;
+        public static final int textView5=0x7f09000d;
+        public static final int textView6=0x7f090004;
+        public static final int textView7=0x7f090008;
+        public static final int textView8=0x7f09000c;
+        public static final int tvBuild=0x7f09000e;
+        public static final int tvDevice=0x7f090002;
+        public static final int tvDeviceHeading=0x7f090001;
+        public static final int tvNewVer=0x7f090011;
+        public static final int tvProgress=0x7f090014;
+        public static final int tvROM=0x7f090006;
+        public static final int tvUpdate=0x7f090012;
+        public static final int tvUpdate_info=0x7f090013;
+        public static final int tvVer=0x7f09000a;
+        public static final int view=0x7f090016;
     }
     public static final class layout {
         public static final int dialog=0x7f030000;
         public static final int main=0x7f030001;
     }
     public static final class menu {
-        public static final int menu=0x7f070000;
+        public static final int menu=0x7f080000;
     }
     public static final class string {
-        public static final int app_name=0x7f050001;
-        public static final int hello=0x7f050000;
+        public static final int app_name=0x7f060001;
+        public static final int hello=0x7f060000;
     }
     public static final class style {
-        public static final int AccessibilityTutorialBodyTextPrimary=0x7f060019;
-        public static final int AccessibilityTutorialButton=0x7f060017;
-        public static final int AccessibilityTutorialDivider=0x7f060018;
-        public static final int AccessibilityTutorialIcon=0x7f06001a;
-        public static final int CryptKeeperBlankTheme=0x7f060012;
-        public static final int SecurityPreferenceButton=0x7f060014;
-        public static final int SecurityPreferenceButtonContainer=0x7f060013;
-        public static final int TallTitleBarTheme=0x7f06000a;
-        public static final int TextAppearance=0x7f060006;
-        public static final int TextAppearance_info_label=0x7f060007;
-        public static final int TextAppearance_info_small=0x7f060008;
-        public static final int TextAppearance_info_value=0x7f060009;
-        public static final int Theme_CreateShortCut=0x7f06000b;
-        public static final int Transparent=0x7f060011;
-        public static final int entry_layout=0x7f060004;
-        public static final int form_value=0x7f060005;
-        public static final int info_label=0x7f060000;
-        public static final int info_layout=0x7f060003;
-        public static final int info_small=0x7f060002;
-        public static final int info_value=0x7f060001;
-        public static final int setup_wizard_button=0x7f060010;
-        public static final int vpn_label=0x7f060015;
-        public static final int vpn_value=0x7f060016;
-        public static final int wifi_item=0x7f06000c;
-        public static final int wifi_item_content=0x7f06000e;
-        public static final int wifi_item_label=0x7f06000d;
-        public static final int wifi_section=0x7f06000f;
+        public static final int AccessibilityTutorialBodyTextPrimary=0x7f070019;
+        public static final int AccessibilityTutorialButton=0x7f070017;
+        public static final int AccessibilityTutorialDivider=0x7f070018;
+        public static final int AccessibilityTutorialIcon=0x7f07001a;
+        public static final int CryptKeeperBlankTheme=0x7f070012;
+        public static final int SecurityPreferenceButton=0x7f070014;
+        public static final int SecurityPreferenceButtonContainer=0x7f070013;
+        public static final int TallTitleBarTheme=0x7f07000a;
+        public static final int TextAppearance=0x7f070006;
+        public static final int TextAppearance_info_label=0x7f070007;
+        public static final int TextAppearance_info_small=0x7f070008;
+        public static final int TextAppearance_info_value=0x7f070009;
+        public static final int Theme_CreateShortCut=0x7f07000b;
+        public static final int Transparent=0x7f070011;
+        public static final int entry_layout=0x7f070004;
+        public static final int form_value=0x7f070005;
+        public static final int info_label=0x7f070000;
+        public static final int info_layout=0x7f070003;
+        public static final int info_small=0x7f070002;
+        public static final int info_value=0x7f070001;
+        public static final int setup_wizard_button=0x7f070010;
+        public static final int vpn_label=0x7f070015;
+        public static final int vpn_value=0x7f070016;
+        public static final int wifi_item=0x7f07000c;
+        public static final int wifi_item_content=0x7f07000e;
+        public static final int wifi_item_label=0x7f07000d;
+        public static final int wifi_section=0x7f07000f;
     }
     public static final class xml {
         public static final int main=0x7f040000;

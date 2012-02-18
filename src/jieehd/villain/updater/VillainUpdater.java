@@ -19,41 +19,39 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.Preference;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.TextView;
 
 
 
 
-public class VillainUpdater extends Activity {
+public class VillainUpdater extends PreferenceActivity {
 	
-	TextView tvDevice;
 	Button btnDown;
-	TextView tvUpdate_info;
-	TextView tvROM;
-	TextView tvBuild;
-	TextView tvUpdate;
-	TextView tvVer;
-	TextView tvNewVer;
 	HttpClient client;
 	JSONObject json;
 	JSONObject device;
 	String rom;
 	JSONObject device_id;
-	Button btnShow;
 	
 	
 	 final static String URL = "http://dl.dropbox.com/u/44265003/update.json";
@@ -72,44 +70,94 @@ public class VillainUpdater extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-		
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        addPreferencesFromResource(R.xml.main);
         client = new DefaultHttpClient();
-        tvDevice = (TextView) findViewById(R.id.tvDevice);
-        tvBuild = (TextView) findViewById(R.id.tvBuild);
-        tvROM = (TextView) findViewById(R.id.tvROM);
-        tvVer = (TextView) findViewById(R.id.tvVer);
-        tvUpdate = (TextView) findViewById(R.id.tvUpdate);
-        tvNewVer = (TextView) findViewById(R.id.tvNewVer);
-        tvUpdate_info = (TextView) findViewById(R.id.tvUpdate_info);
-        btnDown = (Button) findViewById(R.id.btnDown);
-        btnDown.setVisibility(4);
-
-
-        
+        haveNetworkConnection();
         
         String buildDevice = android.os.Build.DEVICE.toUpperCase();
-        String buildVersion = android.os.Build.ID;
-        String buildRom = android.os.Build.DISPLAY;
-        String buildPrint = android.os.Build.FINGERPRINT;
+        String buildVer = android.os.Build.ID;
+        String buildRom = android.os.Build.DISPLAY.toUpperCase();
+        String buildPrint = android.os.Build.FINGERPRINT.toUpperCase();
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         
-        tvDevice.setText(buildDevice);
-        tvROM.setText(buildRom);
-        tvVer.setText(buildVersion);
-        tvBuild.setText(buildPrint);
-        
-       
-        
-        new Read().execute();
-        
+        final Preference device = (Preference) findPreference("device_view");
+        device.setSummary(buildDevice);
+        final Preference Rom = (Preference) findPreference("rom_view");
+        Rom.setSummary(buildRom);        
+        final Preference Version = (Preference) findPreference("version_view");
+        Version.setSummary(buildVer);
+        final Preference build = (Preference) findPreference("build_view");
+        build.setSummary(buildPrint);
        
         
     }
     
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+      	
+        }
+        if (haveConnectedWifi == false || haveConnectedMobile == false) {
+        	Log.d("Network State", "false");
+    	    AlertDialog.Builder alert = new AlertDialog.Builder(VillainUpdater.this);                 
+    	    alert.setTitle("No Data Connection!");  
+    	    alert.setMessage("You have no data connection, please turn on WiFi or Mobile Data in order to check for OTA updates");   
+    	        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+					public void onClick(DialogInterface dialog, int whichButton) {
+						// TODO Auto-generated method stub
+                        final Intent intent = new Intent(Intent.ACTION_MAIN, null);
+                        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                        final ComponentName cn = new ComponentName("com.android.settings", "com.android.settings.wifi.WifiSettings");
+                        intent.setComponent(cn);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity( intent);
+					}
+    	        	
+    	        });
+    	        alert.show();
+        	
+        }else{
+        	download();
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
+    
+    public void download() {
+    	new Read().execute();
+    }
     
     
+    public void getPrefs() {
+        boolean info_show_check;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        info_show_check = prefs.getBoolean("info_show", true);
+        
+        if (info_show_check == true) {
+        	showInfo();
+        }else{
+
+        }
+    }
     
+    
+    private void showInfo() {
+    
+    
+
+    
+    }
     
     
     
@@ -130,8 +178,8 @@ public class VillainUpdater extends Activity {
         						break;
             case R.id.settings:     Intent settings = new Intent();
             						settings.setClass(getApplicationContext(), villainsettings.class);
-            						 Intent settingsActivity = new Intent(getBaseContext(), villainsettings.class);
-            						 startActivity(settingsActivity);
+            						Intent settingsActivity = new Intent(getBaseContext(), villainsettings.class);
+            						startActivity(settingsActivity);
                                 break;
             case R.id.exit: 		finish();
             						System.exit(0);
@@ -283,15 +331,16 @@ public class VillainUpdater extends Activity {
 
 			String buildVersion = android.os.Build.ID;
 					if (buildVersion.equals(result.mRom)) {
-						tvUpdate.setText("No new updates available!");
-						tvNewVer.setText(":(");
+				        final Preference build = (Preference) findPreference("avail_updates");
+				        build.setSummary("No new updates");
 					}else{
     	        	    AlertDialog.Builder alert = new AlertDialog.Builder(VillainUpdater.this);                 
     	        	    alert.setTitle("New updates available!");  
     	        	    alert.setMessage("Changelog: " + result.mChange);
-
- 
-
+				        final Preference build = (Preference) findPreference("avail_updates");
+				        build.setSummary("New updates: " + result.mRom);
+				        
+				        
     	        	        alert.setPositiveButton("Download", new DialogInterface.OnClickListener() {  
     	        	        public void onClick(DialogInterface dialog, int whichButton) {  
     								showDialog(DIALOG_DOWNLOAD_PROGRESS);
@@ -348,11 +397,7 @@ public class VillainUpdater extends Activity {
     										public void run() {
     									    mProgressDialog.setMax(lengthOfFile);
     									    mProgressDialog.setProgress((int) total);
-    									    
-    									    tvUpdate.setText("Download Successful!");
-    									    tvNewVer.setText("Your file can be found at" + PATH);
-    									    tvUpdate_info.setText("");
-    									    btnDown.setVisibility(4);
+
     									}});
     									}
     								
