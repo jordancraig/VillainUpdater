@@ -19,8 +19,10 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -69,10 +71,11 @@ public class VillainUpdater extends PreferenceActivity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
+    	
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.main);
         client = new DefaultHttpClient();
+        setRepeatingAlarm();
         haveNetworkConnection();
         
         String buildDevice = android.os.Build.DEVICE.toUpperCase();
@@ -92,6 +95,14 @@ public class VillainUpdater extends PreferenceActivity {
        
         
     }
+    
+	 public void setRepeatingAlarm() {
+		 AlarmManager am;
+		  am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+		  Intent intent = new Intent(this, checkInBackground.class);
+		  PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+		  am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), (3 * AlarmManager.INTERVAL_DAY), pendingIntent);
+		 }
     
     private boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
