@@ -9,10 +9,12 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Notification;
@@ -27,17 +29,20 @@ import android.os.Looper;
 import android.widget.Toast;
 
 public class checkInBackground extends BroadcastReceiver {
-
-	 NotificationManager nm;
+	
+		private Context mContext;
+	 	NotificationManager nm;
 		HttpClient client;
 		JSONObject json;
 		JSONObject device;
 		final static String URL = "http://dl.dropbox.com/u/44265003/update.json";
 		boolean available = false;
+
 		
 		
 	    public JSONObject getVersion() 
 	    		throws ClientProtocolException, IOException, JSONException{
+			HttpClient client = new DefaultHttpClient();
 	    	StringBuilder url = new StringBuilder(URL);
 	    	HttpGet get = new HttpGet(url.toString());
 	    	HttpResponse r = client.execute(get);
@@ -152,28 +157,30 @@ public class checkInBackground extends BroadcastReceiver {
 						}else if (result.mRom.equals("Could not retrieve device information")){
 							available = false;
 						}else if(buildVersion != (result.mRom)){
+							notifyUser();
 							available = true;
 						}
 			;}
+	 }
+	 
+	 public void notifyUser() {
+		 	  final NotificationManager nm;
+			  nm = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+			  CharSequence from = "Villain Updater";
+			  CharSequence message = "New Updates!";
+			  PendingIntent contentIntent = PendingIntent.getActivity(mContext, 0, new Intent(), 0);
+			  Notification notif = new Notification(R.drawable.updates, "New updates!", System.currentTimeMillis());
+			  notif.setLatestEventInfo(mContext, from, message, contentIntent);
+			  nm.notify(1, notif);
 	 }
 	 
 
 
 	 @Override
 	 public void onReceive(Context context, Intent intent) {
-	  if (available == true) {
-		  nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-		  CharSequence from = "Villain Updater";
-		  CharSequence message = "New Updates!";
-		  PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(), 0);
-		  Notification notif = new Notification(R.drawable.updates, "New updates!", (3 * AlarmManager.INTERVAL_DAY));
-		  notif.setLatestEventInfo(context, from, message, contentIntent);
-		  nm.notify(1, notif);
-	  } else {
-
-	  }
-
-}
+		 new Read().execute();
+		 mContext = context;
+	 }
 }
 
 	
