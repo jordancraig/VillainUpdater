@@ -34,6 +34,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Looper;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -303,7 +304,28 @@ public class VillainUpdater extends PreferenceActivity {
 					String changelog = "Could not retrieve information from server";
 					String downurl = "Could not retrieve information from server";
 					String build = "Could not retrieve information from server";
-					return new Display(rom, changelog, downurl, build);}
+					return new Display(rom, changelog, downurl, build);
+				}else {
+					Looper.prepare();
+		    	    AlertDialog.Builder alert = new AlertDialog.Builder(VillainUpdater.this);                 
+		    	    alert.setTitle("Couldn't locate device");  
+		    	    alert.setMessage("Could not locate your device on our servers, this usually means it is unsupported or we haven't added it to our list of OTA upgradeable devices.");   
+		    	    
+		    	    alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int whichButton) {
+								// TODO Auto-generated method stub
+								finish();
+							}
+		    	        	
+		    	        });
+						String rom = "Could not retrieve device information";
+						String changelog = "Could not retrieve information from server";
+						String downurl = "Could not retrieve information from server";
+						String build = "Could not retrieve information from server";
+		    	        alert.show();
+		    	    	return new Display(rom, changelog, downurl, build);
+
+				}
 						
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
@@ -340,11 +362,14 @@ public class VillainUpdater extends PreferenceActivity {
         	}}
         	
 
-			String buildVersion = android.os.Build.ID;
+					String buildVersion = android.os.Build.ID;
 					if (buildVersion.equals(result.mRom)) {
 				        final Preference build = (Preference) findPreference("avail_updates");
 				        build.setSummary("No new updates");
-					}else{
+					}else if(result.mRom.equals("Could not retrieve device information")){
+				        final Preference build = (Preference) findPreference("avail_updates");
+				        build.setSummary("Unknown Device");
+					}else if(buildVersion !=(result.mRom)){
     	        	    AlertDialog.Builder alert = new AlertDialog.Builder(VillainUpdater.this);                 
     	        	    alert.setTitle("New updates available!");  
     	        	    alert.setMessage("Changelog: " + result.mChange);

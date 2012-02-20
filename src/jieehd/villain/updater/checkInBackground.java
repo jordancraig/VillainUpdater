@@ -2,6 +2,8 @@ package jieehd.villain.updater;
 
 import java.io.IOException;
 
+import jieehd.villain.updater.VillainUpdater.Display;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -12,13 +14,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Looper;
 import android.widget.Toast;
 
 public class checkInBackground extends BroadcastReceiver {
@@ -28,7 +33,7 @@ public class checkInBackground extends BroadcastReceiver {
 		JSONObject json;
 		JSONObject device;
 		final static String URL = "http://dl.dropbox.com/u/44265003/update.json";
-		boolean available = true;
+		boolean available = false;
 		
 		
 	    public JSONObject getVersion() 
@@ -114,7 +119,15 @@ public class checkInBackground extends BroadcastReceiver {
 						String changelog = "Could not retrieve information from server";
 						String downurl = "Could not retrieve information from server";
 						String build = "Could not retrieve information from server";
-						return new Display(rom, changelog, downurl, build);}
+						return new Display(rom, changelog, downurl, build);
+					}else {
+							String rom = "Could not retrieve device information";
+							String changelog = "Could not retrieve information from server";
+							String downurl = "Could not retrieve information from server";
+							String build = "Could not retrieve information from server";
+			    	    	return new Display(rom, changelog, downurl, build);
+
+					}
 							
 				} catch (ClientProtocolException e) {
 					// TODO Auto-generated catch block
@@ -136,7 +149,9 @@ public class checkInBackground extends BroadcastReceiver {
 				String buildVersion = android.os.Build.ID;
 						if (buildVersion.equals(result.mRom)) {
 							available = false;
-						}else{
+						}else if (result.mRom.equals("Could not retrieve device information")){
+							available = false;
+						}else if(buildVersion != (result.mRom)){
 							available = true;
 						}
 			;}
