@@ -9,6 +9,8 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import jieehd.villain.updater.checkInBackground.Display;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -83,7 +85,7 @@ public class VillainUpdater extends PreferenceActivity {
         String buildVer = android.os.Build.ID;
         String buildRom = android.os.Build.DISPLAY.toUpperCase();
         String buildPrint = android.os.Build.FINGERPRINT.toUpperCase();
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         
         final Preference device = (Preference) findPreference("device_view");
         device.setSummary(buildDevice);
@@ -98,7 +100,7 @@ public class VillainUpdater extends PreferenceActivity {
     }
     
 	 public void setRepeatingAlarm() {
-		 AlarmManager am;
+		  AlarmManager am;
 		  am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 		  Intent intent = new Intent(this, checkInBackground.class);
 		  PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -153,7 +155,7 @@ public class VillainUpdater extends PreferenceActivity {
     
     public void getPrefs() {
         boolean info_show_check;
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         info_show_check = prefs.getBoolean("info_show", true);
         
         if (info_show_check == true) {
@@ -165,10 +167,7 @@ public class VillainUpdater extends PreferenceActivity {
     
     
     private void showInfo() {
-    
-    
-
-    
+     
     }
     
     
@@ -298,6 +297,13 @@ public class VillainUpdater extends PreferenceActivity {
 					String changelog = json.getJSONObject("device").getJSONArray("GENERIC").getJSONObject(0).getString("changelog");
 					String downurl = json.getJSONObject("device").getJSONArray("GENERIC").getJSONObject(0).getString("url");
 					String build = json.getJSONObject("device").getJSONArray("GENERIC").getJSONObject(0).getString("rom");
+					return new Display(rom, changelog, downurl, build);
+				}else if (buildDevice.equals("GT-N7000")) {
+					json = getVersion();
+					String rom = json.getJSONObject("device").getJSONArray("GT-N7000").getJSONObject(0).getString("version");
+					String changelog = json.getJSONObject("device").getJSONArray("GT-N7000").getJSONObject(0).getString("changelog");
+					String downurl = json.getJSONObject("device").getJSONArray("GT-N7000").getJSONObject(0).getString("url");
+					String build = json.getJSONObject("device").getJSONArray("GT-N7000").getJSONObject(0).getString("rom");
 					return new Display(rom, changelog, downurl, build);
 				} else if (buildDevice.equals(null)) {
 					String rom = "Could not retrieve device information";

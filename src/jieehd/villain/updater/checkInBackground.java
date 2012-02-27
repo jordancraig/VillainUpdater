@@ -1,9 +1,6 @@
 package jieehd.villain.updater;
 
 import java.io.IOException;
-
-import jieehd.villain.updater.VillainUpdater.Display;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -13,22 +10,18 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Looper;
-import android.widget.Toast;
+import android.preference.PreferenceManager;
 
 public class checkInBackground extends BroadcastReceiver {
+		
 	
 		private Context mContext;
 	 	NotificationManager nm;
@@ -37,8 +30,6 @@ public class checkInBackground extends BroadcastReceiver {
 		JSONObject device;
 		final static String URL = "http://dl.dropbox.com/u/44265003/update.json";
 		boolean available = false;
-
-		
 		
 	    public JSONObject getVersion() 
 	    		throws ClientProtocolException, IOException, JSONException{
@@ -119,6 +110,13 @@ public class checkInBackground extends BroadcastReceiver {
 						String downurl = json.getJSONObject("device").getJSONArray("GENERIC").getJSONObject(0).getString("url");
 						String build = json.getJSONObject("device").getJSONArray("GENERIC").getJSONObject(0).getString("rom");
 						return new Display(rom, changelog, downurl, build);
+					}else if (buildDevice.equals("GT-N7000")) {
+						json = getVersion();
+						String rom = json.getJSONObject("device").getJSONArray("GT-N7000").getJSONObject(0).getString("version");
+						String changelog = json.getJSONObject("device").getJSONArray("GT-N7000").getJSONObject(0).getString("changelog");
+						String downurl = json.getJSONObject("device").getJSONArray("GT-N7000").getJSONObject(0).getString("url");
+						String build = json.getJSONObject("device").getJSONArray("GT-N7000").getJSONObject(0).getString("rom");
+						return new Display(rom, changelog, downurl, build);
 					} else if (buildDevice.equals(null)) {
 						String rom = "Could not retrieve device information";
 						String changelog = "Could not retrieve information from server";
@@ -157,8 +155,7 @@ public class checkInBackground extends BroadcastReceiver {
 						}else if (result.mRom.equals("Could not retrieve device information")){
 							available = false;
 						}else if(buildVersion != (result.mRom)){
-							notifyUser();
-							available = true;
+							available = false;
 						}
 			;}
 	 }
@@ -181,6 +178,14 @@ public class checkInBackground extends BroadcastReceiver {
 		 new Read().execute();
 		 mContext = context;
 	 }
+
+
+
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+			String key) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
 	

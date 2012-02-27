@@ -118,8 +118,6 @@ public class villainsettings extends PreferenceActivity implements OnSharedPrefe
 
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String info_show) {
 		// TODO Auto-generated method stub
-		VillainUpdater obj = new VillainUpdater();
-		obj.getPrefs();
 		
 	}
     
