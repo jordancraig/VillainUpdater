@@ -126,7 +126,7 @@ public class VillainUpdater extends PreferenceActivity {
         	Log.d("Network State", "false");
     	    AlertDialog.Builder alert = new AlertDialog.Builder(VillainUpdater.this);                 
     	    alert.setTitle("No Data Connection!");  
-    	    alert.setMessage("You have no data connection, please turn on WiFi or Mobile Data in order to check for OTA updates.");   
+    	    alert.setMessage("You have no data connection, click ok to turn on WiFi or Mobile Data in order to check for OTA updates.");   
     	        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int whichButton) {
@@ -139,6 +139,13 @@ public class VillainUpdater extends PreferenceActivity {
                         startActivity( intent);
 					}
     	        	
+    	        });
+    	        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+    	            public void onClick(DialogInterface dialog, int which) {
+    	                // TODO Auto-generated method stub
+    	                return;   
+    	            }
     	        });
     	        alert.show();
         	

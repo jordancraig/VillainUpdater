@@ -10,20 +10,27 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class checkInBackground extends BroadcastReceiver {
 		
 	
-		private Context mContext;
+		public Context mContext;
 	 	NotificationManager nm;
 		HttpClient client;
 		JSONObject json;
@@ -49,6 +56,24 @@ public class checkInBackground extends BroadcastReceiver {
 	    	}
 	    }
 	    
+	    public boolean haveNetworkConnection(Context mContext) {
+	        boolean haveConnectedWifi = false;
+	        boolean haveConnectedMobile = false;
+
+	        ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+	        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+	        for (NetworkInfo ni : netInfo) {
+	            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+	                if (ni.isConnected())
+	                    haveConnectedWifi = true;
+	            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+	                if (ni.isConnected())
+	                    haveConnectedMobile = true;
+	            		
+	        }
+	        return haveConnectedWifi || haveConnectedMobile;
+	    }
+	    
 	    
 	    public class Display {
 	    	public String mRom;
@@ -65,6 +90,7 @@ public class checkInBackground extends BroadcastReceiver {
 	    	
 	    	}
 	    }
+	    
 	 
 	 
 	 public class Read extends AsyncTask<String, Integer, Display> {
@@ -147,16 +173,35 @@ public class checkInBackground extends BroadcastReceiver {
 				return null;
 				}
 			
+			
 			@Override
 			public void onPostExecute(final Display result) {
-				String buildVersion = android.os.Build.ID;
+		        boolean haveConnectedWifi = false;
+		        boolean haveConnectedMobile = false;
+
+		        ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+		        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+		        for (NetworkInfo ni : netInfo) {
+		            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+		                if (ni.isConnected())
+		                    haveConnectedWifi = true;
+		            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+		                if (ni.isConnected())
+		                    haveConnectedMobile = true;
+		        }
+					final String buildVersion = android.os.Build.ID;
+					if (haveConnectedWifi == false && haveConnectedMobile == false)  {
+						available = false;
+					}else{
 						if (buildVersion.equals(result.mRom)) {
 							available = false;
+						}else if (result.mRom != null && !result.mRom.isEmpty()) {
+							available = true;
 						}else if (result.mRom.equals("Could not retrieve device information")){
 							available = false;
 						}else if(buildVersion != (result.mRom)){
 							available = false;
-						}
+						}}
 			;}
 	 }
 	 
