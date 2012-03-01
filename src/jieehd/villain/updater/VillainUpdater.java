@@ -99,6 +99,15 @@ public class VillainUpdater extends PreferenceActivity {
         
     }
     
+    public void requestRoot() {
+    	try {
+			Process root = Runtime.getRuntime().exec("su");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
 	 public void setRepeatingAlarm() {
 		  AlarmManager am;
 		  am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
