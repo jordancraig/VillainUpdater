@@ -30,7 +30,7 @@ private void ListDir(File f){
     for (File file : files){
      fileList.add(file.getPath().substring(28));
      pathList.add(file.getPath());
-     final ArrayAdapter<String> directoryList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fileList);
+     final ArrayAdapter<String> directoryList = new ArrayAdapter<String>(this, R.layout.row, R.id.filename, fileList);
      setListAdapter(directoryList);
     }
 };
@@ -39,7 +39,7 @@ private void ListDir(File f){
    @Override
    public void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
-       final ArrayAdapter<String> directoryList = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fileList);
+       final ArrayAdapter<String> directoryList = new ArrayAdapter<String>(this, R.layout.row, R.id.filename, fileList);
        setListAdapter(directoryList);
        final String PATH = "/VillainROM/ROMs";
        final File SDDIR = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + PATH);

@@ -25,17 +25,20 @@ public final class R {
         public static final int updates=0x7f020007;
         public static final int version=0x7f020008;
         public static final int wrench=0x7f020009;
+        public static final int zip=0x7f02000a;
     }
     public static final class id {
         public static final int btnDown=0x7f090015;
         public static final int dialog=0x7f090000;
-        public static final int exit=0x7f090019;
+        public static final int exit=0x7f09001b;
+        public static final int filename=0x7f090017;
         public static final int horizontalLine=0x7f090003;
         public static final int horizontalLine1=0x7f090007;
         public static final int horizontalLine2=0x7f09000b;
         public static final int horizontalLine3=0x7f09000f;
-        public static final int refresh=0x7f090018;
-        public static final int settings=0x7f090017;
+        public static final int icon=0x7f090016;
+        public static final int refresh=0x7f09001a;
+        public static final int settings=0x7f090019;
         public static final int textView1=0x7f090010;
         public static final int textView3=0x7f090005;
         public static final int textView4=0x7f090009;
@@ -52,11 +55,12 @@ public final class R {
         public static final int tvUpdate=0x7f090012;
         public static final int tvUpdate_info=0x7f090013;
         public static final int tvVer=0x7f09000a;
-        public static final int view=0x7f090016;
+        public static final int view=0x7f090018;
     }
     public static final class layout {
         public static final int dialog=0x7f030000;
         public static final int main=0x7f030001;
+        public static final int row=0x7f030002;
     }
     public static final class menu {
         public static final int menu=0x7f080000;

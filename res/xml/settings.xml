@@ -48,9 +48,5 @@
                 android:title="Check for updates"
                 android:summary="Check for application updates"
                 android:key="tv_check_update"/>
-               <Preference
-                android:title="Developer"
-                android:summary="Jordan Craig"
-                android:key="tv_dev"/>
             </PreferenceCategory>
 </PreferenceScreen>

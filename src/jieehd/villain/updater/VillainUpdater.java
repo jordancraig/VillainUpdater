@@ -59,7 +59,7 @@ public class VillainUpdater extends PreferenceActivity {
 	JSONObject device_id;
 	
 	
-	 final static String URL = "http://dl.dropbox.com/u/44265003/update.json";
+	 
 	 File sdDir = (Environment.getExternalStorageDirectory());
  	 public String PATH = sdDir + "/VillainROM/ROMs/VillainROM";
 	 protected static final String Display = null;
@@ -69,6 +69,7 @@ public class VillainUpdater extends PreferenceActivity {
 		
 	    private ProgressDialog mProgressDialog;
 	    public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
+	    public static String URL = null;
 
 	
     /** Called when the activity is first created. */
@@ -97,6 +98,10 @@ public class VillainUpdater extends PreferenceActivity {
         build.setSummary(buildPrint);
        
         
+    }
+    
+    public void checkRomType() {
+
     }
     
     public void requestRoot() {
@@ -221,6 +226,17 @@ public class VillainUpdater extends PreferenceActivity {
     
     public JSONObject getVersion() 
     		throws ClientProtocolException, IOException, JSONException{
+    	
+    	String romType = android.os.Build.DISPLAY;
+    	
+    	if (romType.contains("VillainROM")) {
+    		URL = "http://dl.dropbox.com/u/44265003/update.json";
+    	}else if (romType.contains("VillainMOD")) {
+    		URL = "http://dl.dropbox.com/u/44265003/update.json";
+    	}else{
+    		URL = "http://dl.dropbox.com/u/44265003/update.json";
+    	}
+    	
     	StringBuilder url = new StringBuilder(URL);
     	HttpGet get = new HttpGet(url.toString());
     	HttpResponse r = client.execute(get);
