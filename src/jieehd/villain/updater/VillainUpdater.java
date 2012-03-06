@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2012 VillainROM
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * You may only use this file in compliance with the license and provided you are not associated with or are in co-operation anyone by the name 'X Vanderpoel'.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
 package jieehd.villain.updater;
 
 import java.io.BufferedInputStream;
@@ -8,9 +25,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
-
 import jieehd.villain.updater.checkInBackground.Display;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -20,7 +35,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -45,6 +59,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.TabHost;
 
 
 
@@ -57,6 +72,8 @@ public class VillainUpdater extends PreferenceActivity {
 	JSONObject device;
 	String rom;
 	JSONObject device_id;
+	
+	
 	
 	
 	 
@@ -78,6 +95,7 @@ public class VillainUpdater extends PreferenceActivity {
     	
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.main);
+        
         client = new DefaultHttpClient();
         setRepeatingAlarm();
         haveNetworkConnection();
